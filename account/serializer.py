@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=60)
     first_name = serializers.CharField(max_length=60)
     last_name = serializers.CharField(max_length=30)
-    password = serializers.CharField(min_length=8, write_only=True)
+    password = serializers.CharField(write_only=True)
 
     class Meta:
         model = MyUser
@@ -17,10 +17,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
     def validate(self, attrs):
-        email_exist = MyUser.objects.filter(email=attrs['email']).exists
-        username_exist = MyUser.objects.filter(username=attrs['username']).exists
+        email_exist = MyUser.objects.filter(email=attrs['email']).exists()
+        username_exist = MyUser.objects.filter(username=attrs['username']).exists()
         if email_exist:
-            raise ValidationError("Email Has alredy used")
+            raise ValidationError("This email is already in use")
         if username_exist:
             raise ValidationError("This username already taken")
 

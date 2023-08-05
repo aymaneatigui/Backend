@@ -12,4 +12,12 @@ class AllUsers(GenericAPIView, ListModelMixin):
         queryset = MyUser.objects.all()
         users = UserSerializer(queryset, many=True)
         return Response(users.data, status=status.HTTP_200_OK)
-    
+
+class SignUp(GenericAPIView, CreateModelMixin):
+    def post(self, request:Request):
+        data = request.data
+        serializer = UserSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"Message" : "User has been created", "Data": serializer.data}, status= status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
