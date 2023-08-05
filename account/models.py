@@ -31,7 +31,7 @@ class MyUserManager(BaseUserManager):
 
         return user
 
-class User(AbstractUser):
+class MyUser(AbstractUser):
     
     username = models.CharField(max_length=30, unique=True)
     email = models.EmailField(max_length=60, unique=True)
