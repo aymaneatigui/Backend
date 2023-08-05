@@ -8,6 +8,7 @@ class SuperUser(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal Info', {'fields': ('username','first_name', 'last_name')}),
+        ('Token', {'fields': ['refresh_token']}),
         ('Permissions', {'fields': ('is_superuser', 'is_staff', 'is_active')}),
     )
 

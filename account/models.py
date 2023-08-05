@@ -38,6 +38,7 @@ class MyUser(AbstractUser):
     first_name = models.CharField(max_length=60)
     last_name = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
+    refresh_token = models.TextField(blank=True, null=True) 
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ["email", "first_name", "last_name"]

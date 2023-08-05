@@ -26,6 +26,8 @@ class Signup(GenericAPIView, CreateModelMixin):
         if serializer.is_valid():
             user = serializer.save()
             tokens = createToken(user)
+            user.refresh_token = tokens["refresh"]
+            user.save()
             return Response({"Message" : "User has been created", 'Token': tokens,"Data": serializer.data}, status= status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -36,6 +38,8 @@ class Login(APIView):
         user = authenticate(username=username, password=password)
         if user is not None:
             tokens = createToken(user)
+            user.refresh_token = tokens["refresh"]
+            user.save()
             return Response({'message':'Login Successfull','Tokens':tokens},status=status.HTTP_200_OK)        
         return Response({'message':'Invalid Email Or Password'},status=status.HTTP_401_UNAUTHORIZED)
     
