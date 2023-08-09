@@ -1,9 +1,13 @@
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.tokens import AccessToken
 
-User = get_user_model()
-
-def createToken(user:User):
+def createToken(user):
     refresh = RefreshToken.for_user(user)
-    tokens =  { "access" : str(refresh.access_token), "refresh": str(refresh)}
-    return tokens
+    access = str(refresh.access_token)
+    token = AccessToken(access)
+    expires_at = token['exp']
+    return {
+        'refresh': str(refresh),
+        'access': access,
+        'expires_at': expires_at,
+    }
