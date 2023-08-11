@@ -9,5 +9,5 @@ def createToken(user):
     return {
         'refresh': str(refresh),
         'access': access,
-        'expires_at': expires_at,
+        'exp': expires_at,
     }
